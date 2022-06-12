@@ -3,7 +3,8 @@ import Home from '../views/Home.vue'
 import AddCategory from "../views/Category/AddCategory";
 import Category from "../views/Category/Category";
 import EditCategory from "../views/Category/EditCategory";
-import AddProduct from "@/views/Product/AddProduct";
+import AddProduct from "../views/Product/AddProduct";
+import Product from "../views/Product/Product";
 
 const routes = [
   {
@@ -24,12 +25,17 @@ const routes = [
   {
     path: "/admin/category/:id",
     name: "EditCategory",
-    component: EditCategory
+    component: EditCategory,
   },
   {
     path: "/admin/product/add",
     name: "AddProduct",
     component: AddProduct,
+  },
+  {
+    path: "/admin/product",
+    name: "AdminProduct",
+    component: Product,
   }
 ];
 
