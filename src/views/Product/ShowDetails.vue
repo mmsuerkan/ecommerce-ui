@@ -23,6 +23,11 @@
             </div>
             <input class="form-control" type="number" v-model="quantity"/>
           </div>
+          <!-- wishlist button -->
+          <button id="wishlist-button" class="btn mr-3 p-1 py-0" style="background-color: #b3a594"
+                  @click="addToWishList(this.id)">
+            Add to wishlist
+          </button>
         </div>
 
         <!-- Dummy placeholder features -->
@@ -44,6 +49,8 @@
 </template>
 
 <script>
+const axios = require('axios')
+import swal from 'sweetalert';
 export default {
   data(){
     return {
@@ -55,12 +62,32 @@ export default {
   },
   props : ["baseURL","products", "categories"],
   methods:{
+    addToWishList(productId){
+      axios.post(`${this.baseURL}wishlist/add?token=${this.token}`, {
+        id:productId
+      }).then((response) => {
+        if(response.status==201) {
+          swal({
+            text: "Added to WishList. Please continue",
+            icon: "success"
+          });
+        }
+      },(error) =>{
+        console.log(error)
+        swal({
+          text: "Something wrong with add to wishlist",
+          icon: "error",
+          closeOnClickOutside: false,
+        });
 
+      });
+    },
   },
   mounted() {
     this.id = this.$route.params.id;
     this.product = this.products.find(product => product.id == this.id);
     this.category = this.categories.find(category => category.id == this.product.categoryId);
+    this.token = localStorage.getItem('token');
   }
 }
 </script>
